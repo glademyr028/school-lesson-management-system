@@ -1123,3 +1123,77 @@ function setupDurationField() {
 }
 
 setupDurationField();
+
+
+// ==========================================
+// Country → Curriculum Synchronization
+// ==========================================
+
+const curriculumOptionsByCountry = {
+  "Philippines": [
+    ["MATATAG", "MATATAG"],
+    ["K to 12", "K to 12"],
+    ["Custom", "Custom framework"]
+  ],
+  "United States": [
+    ["Common Core State Standards", "Common Core State Standards"],
+    ["Next Generation Science Standards", "Next Generation Science Standards"],
+    ["State / Local Framework", "State / Local Framework"],
+    ["Custom", "Custom framework"]
+  ],
+  "Canada": [
+    ["Provincial / Territorial Curriculum", "Provincial / Territorial Curriculum"],
+    ["Custom", "Custom framework"]
+  ],
+  "United Kingdom": [
+    ["National Curriculum (England)", "National Curriculum (England)"],
+    ["Custom", "Custom framework"]
+  ],
+  "Singapore": [
+    ["Singapore National Curriculum", "Singapore National Curriculum"],
+    ["Custom", "Custom framework"]
+  ],
+  "Australia": [
+    ["Australian Curriculum", "Australian Curriculum"],
+    ["State / Territory Curriculum", "State / Territory Curriculum"],
+    ["Custom", "Custom framework"]
+  ]
+};
+
+function syncCurriculumWithCountry() {
+  const country = document.getElementById("country");
+  const curriculum = document.getElementById("curriculum");
+  const customCurriculum = document.getElementById("customCurriculum");
+
+  if (!country || !curriculum) return;
+
+  const previousValue = curriculum.value;
+  const options = curriculumOptionsByCountry[country.value] || [
+    ["Custom", "Custom framework"]
+  ];
+
+  curriculum.innerHTML = options
+    .map(function(option) {
+      return "<option value=\"" + escapeHtml(option[0]) + "\">" + escapeHtml(option[1]) + "</option>";
+    })
+    .join("");
+
+  const stillAvailable = options.some(function(option) {
+    return option[0] === previousValue;
+  });
+
+  curriculum.value = stillAvailable ? previousValue : options[0][0];
+
+  if (customCurriculum) {
+    customCurriculum.value = "";
+    customCurriculum.classList.toggle("hidden", curriculum.value !== "Custom");
+    customCurriculum.required = curriculum.value === "Custom";
+  }
+}
+
+const countryField = document.getElementById("country");
+
+if (countryField) {
+  countryField.addEventListener("change", syncCurriculumWithCountry);
+  syncCurriculumWithCountry();
+}
