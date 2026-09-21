@@ -16,7 +16,9 @@ const contextFields = {
   gradeLevel: document.getElementById("gradeLevel"),
   subject: document.getElementById("subject"),
   durationPreset: document.getElementById("durationPreset"),
-  customDuration: document.getElementById("customDuration")
+  customDuration: document.getElementById("customDuration"),
+  textSize: document.getElementById("textSize"),
+  customTextSize: document.getElementById("customTextSize")
 };
 
 const charCount =
@@ -84,6 +86,7 @@ async function generateLesson() {
   const gradeLevel = getContextValue("gradeLevel", "Grade 5");
   const subject = getContextValue("subject", "Science");
   const durationMinutes = getDurationMinutes();
+  const textSize = getTextSizeSettings();
   const gradeSubject = gradeLevel + " · " + subject;
 
   const topic =
@@ -139,6 +142,7 @@ async function generateLesson() {
     gradeLevel,
     subject,
     durationMinutes,
+    textSize,
     gradeSubject,
     topic,
     outputs: selectedOutputs
@@ -173,6 +177,7 @@ async function generateLesson() {
             gradeLevel,
             subject,
             durationMinutes,
+            textSize,
             topic,
             outputs: selectedOutputs
           })
@@ -285,6 +290,14 @@ function displayLessonResult(
 
   const outputs =
     data.outputs || [];
+
+  const textSize =
+    data.textSize || currentRequest?.textSize || getTextSizeSettings();
+
+  resultSection.dataset.textSize = textSize.preset || "large";
+  resultSection.style.setProperty("--result-body-size", (textSize.body || 22) + "px");
+  resultSection.style.setProperty("--result-title-size", (textSize.title || 32) + "px");
+  resultSection.style.setProperty("--result-prompt-size", (textSize.prompt || 19) + "px");
 
   if (!lesson) {
 
@@ -1106,6 +1119,37 @@ function getDurationMinutes() {
   if (preset.value !== "Custom") return Number(preset.value) || 40;
   return Number(custom?.value || 0);
 }
+
+function getTextSizeSettings() {
+  const preset = document.getElementById("textSize");
+  const custom = document.getElementById("customTextSize");
+  const map = {
+    standard: { body: 18, title: 28, prompt: 16, meta: 15 },
+    large: { body: 22, title: 32, prompt: 19, meta: 17 },
+    "extra-large": { body: 26, title: 36, prompt: 22, meta: 19 }
+  };
+  if (!preset || preset.value !== "custom") {
+    const selected = preset?.value || "large";
+    return { preset: selected, ...(map[selected] || map.large) };
+  }
+  const body = Math.min(40, Math.max(12, Number(custom?.value || 22)));
+  return { preset: "custom", body, title: Math.max(32, body + 10), prompt: Math.max(19, body - 3), meta: Math.max(15, body - 5) };
+}
+
+function setupTextSizeField() {
+  const preset = document.getElementById("textSize");
+  const custom = document.getElementById("customTextSize");
+  if (!preset || !custom) return;
+  const update = () => {
+    const isCustom = preset.value === "custom";
+    custom.classList.toggle("hidden", !isCustom);
+    custom.required = isCustom;
+  };
+  preset.addEventListener("change", update);
+  update();
+}
+
+setupTextSizeField();
 
 function setupDurationField() {
   const preset = document.getElementById("durationPreset");
