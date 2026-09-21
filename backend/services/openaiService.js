@@ -22,7 +22,11 @@ if (hasOpenAIKey) {
  * automatically falls back to our local prompt architect.
  */
 async function createGeminiPrompt({
+  country,
   curriculum,
+  gradeLevel,
+  subject,
+  durationMinutes,
   gradeSubject,
   topic,
   outputs
@@ -82,11 +86,20 @@ structured JSON matching the application's schema.
       const userRequest = `
 TEACHER REQUEST
 
-Curriculum:
+Country:
+${country}
+
+Curriculum / Educational Framework:
 ${curriculum}
 
-Grade & Subject:
-${gradeSubject}
+Grade Level:
+${gradeLevel}
+
+Subject:
+${subject}
+
+Lesson Duration:
+${durationMinutes} minutes
 
 Topic / Instructions:
 ${topic}
@@ -172,7 +185,11 @@ that will be sent to Gemini.
  * even when OpenAI is unavailable.
  */
 function buildMasterPrompt({
+  country,
   curriculum,
+  gradeLevel,
+  subject,
+  durationMinutes,
   gradeSubject,
   topic,
   outputs
@@ -187,11 +204,20 @@ based on the teacher's request below.
 TEACHER REQUEST
 ================
 
-Curriculum:
+Country:
+${country}
+
+Curriculum / Educational Framework:
 ${curriculum}
 
-Grade & Subject:
-${gradeSubject}
+Grade Level:
+${gradeLevel}
+
+Subject:
+${subject}
+
+Lesson Duration:
+${durationMinutes} minutes
 
 Topic / Instructions:
 ${topic}
@@ -203,6 +229,10 @@ IMPORTANT INSTRUCTIONS
 ======================
 
 1. Follow the specified country, curriculum, grade level, and subject context.
+
+2. Treat the requested lesson duration as a hard planning constraint. The complete lesson flow must fit within the requested number of minutes.
+
+3. Do not claim official curriculum alignment, standards, codes, or policies unless they are provided by the teacher.
 
 2. Keep all explanations appropriate for the students'
    developmental level.
