@@ -11,6 +11,34 @@ const {
 } = require("./geminiService");
 
 // ==========================================
+// Timing Normalization
+// ==========================================
+
+function normalizeLessonTiming(lesson, targetMinutes) {
+  const flow = Array.isArray(lesson.lesson_flow) ? lesson.lesson_flow : [];
+  const target = Number(targetMinutes) || 40;
+  if (!flow.length) return lesson;
+  const validMinutes = flow.map(phase => Math.max(0, Number(phase.minutes) || 0));
+  const currentTotal = validMinutes.reduce((sum, minutes) => sum + minutes, 0);
+  if (currentTotal <= 0) {
+    const base = Math.floor(target / flow.length);
+    let remainder = target - (base * flow.length);
+    lesson.lesson_flow = flow.map(phase => ({ ...phase, minutes: base + (remainder-- > 0 ? 1 : 0) }));
+    return lesson;
+  }
+  let assigned = 0;
+  lesson.lesson_flow = flow.map((phase, index) => {
+    if (index === flow.length - 1) return { ...phase, minutes: Math.max(0, target - assigned) };
+    const scaled = Math.max(0, Math.round((validMinutes[index] / currentTotal) * target));
+    assigned += scaled;
+    return { ...phase, minutes: scaled };
+  });
+  const finalTotal = lesson.lesson_flow.reduce((sum, phase) => sum + (Number(phase.minutes) || 0), 0);
+  if (finalTotal !== target) lesson.lesson_flow[lesson.lesson_flow.length - 1].minutes += target - finalTotal;
+  return lesson;
+}
+
+// ==========================================
 // Generate Lesson
 // ==========================================
 
@@ -110,6 +138,9 @@ async function generateLesson({
       "Gemini response contains an invalid presentation structure."
     );
   }
+
+  result.lesson = normalizeLessonTiming(result.lesson, durationMinutes);
+  result.lesson.duration_minutes = Number(durationMinutes);
 
   // ========================================
   // STEP 3
