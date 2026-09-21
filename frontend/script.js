@@ -15,7 +15,8 @@ const contextFields = {
   curriculum: document.getElementById("curriculum"),
   gradeLevel: document.getElementById("gradeLevel"),
   subject: document.getElementById("subject"),
-  duration: document.getElementById("duration")
+  durationPreset: document.getElementById("durationPreset"),
+  customDuration: document.getElementById("customDuration")
 };
 
 const charCount =
@@ -82,7 +83,7 @@ async function generateLesson() {
   const curriculum = getContextValue("curriculum", "MATATAG");
   const gradeLevel = getContextValue("gradeLevel", "Grade 5");
   const subject = getContextValue("subject", "Science");
-  const durationMinutes = Number(contextFields.duration?.value || 40);
+  const durationMinutes = getDurationMinutes();
   const gradeSubject = gradeLevel + " · " + subject;
 
   const topic =
@@ -100,9 +101,9 @@ async function generateLesson() {
   // Validation
   // ========================================
 
-  if (!durationMinutes || durationMinutes < 5) {
-    alert("Please enter a lesson duration of at least 5 minutes.");
-    contextFields.duration?.focus();
+  if (!durationMinutes || durationMinutes < 5 || durationMinutes > 480) {
+    alert("Please choose a lesson duration between 5 and 480 minutes.");
+    contextFields.durationPreset?.focus();
     return;
   }
 
@@ -1080,7 +1081,7 @@ function getContextValue(selectId, fallback) {
   if (!select) return fallback;
   if (select.value !== "Custom") return select.value || fallback;
   const custom = document.getElementById("custom" + selectId.charAt(0).toUpperCase() + selectId.slice(1));
-  return custom?.value.trim() || fallback;
+  return custom?.value.trim() || "";
 }
 
 function setupCustomContextField(selectId) {
@@ -1096,3 +1097,29 @@ function setupCustomContextField(selectId) {
 }
 
 ["country", "curriculum", "gradeLevel", "subject"].forEach(setupCustomContextField);
+
+function getDurationMinutes() {
+  const preset = document.getElementById("durationPreset");
+  const custom = document.getElementById("customDuration");
+
+  if (!preset) return 40;
+  if (preset.value !== "Custom") return Number(preset.value) || 40;
+  return Number(custom?.value || 0);
+}
+
+function setupDurationField() {
+  const preset = document.getElementById("durationPreset");
+  const custom = document.getElementById("customDuration");
+  if (!preset || !custom) return;
+
+  const update = () => {
+    const isCustom = preset.value === "Custom";
+    custom.classList.toggle("hidden", !isCustom);
+    custom.required = isCustom;
+  };
+
+  preset.addEventListener("change", update);
+  update();
+}
+
+setupDurationField();
