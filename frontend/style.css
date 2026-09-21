@@ -457,3 +457,39 @@ footer {
   opacity: 0.7;
   cursor: wait;
 }
+
+/* Educational context controls */
+.context-heading {
+  margin: 4px 0 14px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.custom-context-input {
+  width: 100%;
+  margin-top: 8px;
+  box-sizing: border-box;
+}
+
+.duration-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.duration-input input {
+  flex: 1;
+}
+
+.duration-input span,
+.field-hint {
+  color: #777;
+  font-size: 0.82rem;
+}
+
+.field-hint {
+  display: block;
+  margin-top: 6px;
+}
