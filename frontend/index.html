@@ -104,12 +104,17 @@
           </div>
 
           <div class="field">
-            <label for="duration">Lesson duration</label>
-            <div class="duration-input">
-              <input id="duration" type="number" min="5" max="480" step="5" value="40" placeholder="40">
-              <span>minutes</span>
-            </div>
-            <small class="field-hint">Set the total time available for this lesson.</small>
+            <label for="durationPreset">Lesson duration</label>
+            <select id="durationPreset">
+              <option value="30">30 minutes</option>
+              <option value="40" selected>40 minutes</option>
+              <option value="45">45 minutes</option>
+              <option value="60">60 minutes</option>
+              <option value="90">90 minutes</option>
+              <option value="Custom">Custom duration</option>
+            </select>
+            <input id="customDuration" class="custom-context-input hidden" type="number" min="5" max="480" step="5" placeholder="Enter minutes">
+            <small class="field-hint">Choose a common lesson length or set a custom duration.</small>
           </div>
         </div>
 
