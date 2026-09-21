@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="School Management System - AI Lesson Generator">
+  <title>School Management System | Lesson Generator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">S</div>
+        <div>
+          <h1>School Management System</h1>
+          <p>AI Lesson Generator</p>
+        </div>
+      </div>
+      <div class="status-pill"><span></span> Prototype</div>
+    </header>
+
+    <main class="main-content">
+      <section class="hero">
+        <div class="eyebrow">TEACHER WORKSPACE</div>
+        <h2>Create a complete lesson from one prompt.</h2>
+        <p>
+          Set your curriculum, grade, subject, and topic. Choose the resources
+          you want to generate and preview the result instantly.
+        </p>
+      </section>
+
+      <section class="generator-card">
+        <div class="section-heading">
+          <div>
+            <span class="step-number">01</span>
+            <div>
+              <h3>Lesson context</h3>
+              <p>Tell us what you are teaching.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="curriculum">Country / curriculum</label>
+            <select id="curriculum">
+              <option value="Philippines · MATATAG">Philippines · MATATAG</option>
+              <option value="Philippines · K to 12">Philippines · K to 12</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="gradeSubject">Grade &amp; subject</label>
+            <select id="gradeSubject">
+              <option value="Grade 5 · Science">Grade 5 · Science</option>
+              <option value="Grade 4 · Science">Grade 4 · Science</option>
+              <option value="Grade 6 · Science">Grade 6 · Science</option>
+              <option value="Grade 5 · Mathematics">Grade 5 · Mathematics</option>
+              <option value="Grade 5 · English">Grade 5 · English</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="topic">Topic / prompt</label>
+          <textarea id="topic" rows="4" placeholder="Example: The water cycle, 40-minute period, include a short formative quiz">The water cycle, 40-minute period, include a short formative quiz</textarea>
+          <div class="char-count"><span id="charCount">0</span> characters</div>
+        </div>
+
+        <div class="generate-section">
+          <label class="generate-label">Generate</label>
+
+          <div class="output-options">
+            <label class="check-option">
+              <input type="checkbox" value="Lesson Plan" checked>
+              <span class="custom-check"></span>
+              <span>
+                <strong>Lesson plan</strong>
+                <small>DLL / DLP format</small>
+              </span>
+            </label>
+
+            <label class="check-option">
+              <input type="checkbox" value="Learning Module" checked>
+              <span class="custom-check"></span>
+              <span>
+                <strong>Learning module</strong>
+                <small>Student handout</small>
+              </span>
+            </label>
+
+            <label class="check-option">
+              <input type="checkbox" value="Slide Deck" checked>
+              <span class="custom-check"></span>
+              <span>
+                <strong>Slide deck</strong>
+                <small>Presentation outline</small>
+              </span>
+            </label>
+          </div>
+
+          <button id="generateBtn" class="generate-btn">
+            <span>Generate resources</span>
+            <span class="arrow">→</span>
+          </button>
+        </div>
+      </section>
+
+      <section id="resultSection" class="result-section hidden">
+        <div class="result-header">
+          <div>
+            <div class="eyebrow">GENERATED PREVIEW</div>
+            <h3>Your lesson resources</h3>
+          </div>
+          <button id="resetBtn" class="secondary-btn">Start over</button>
+        </div>
+
+        <div id="resultContent" class="result-grid"></div>
+      </section>
+    </main>
+
+    <footer>
+      <p>School Management System · Lesson Generator Prototype</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
