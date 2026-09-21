@@ -105,7 +105,7 @@ function addVisual(slide, suggestion, title) {
 }
 
 function addBullets(slide, content) {
-  const items = Array.isArray(content) ? content.filter(Boolean) : [];
+  const items = Array.isArray(content) ? content.filter(item => item !== null && item !== undefined && String(item).trim() !== "") : [];
   if (!items.length) return;
 
   slide.addText(
@@ -144,15 +144,15 @@ async function createLessonPowerPoint(lesson) {
     x: 0.7, y: 0.7, w: 11, h: 0.5,
     fontSize: 20, bold: true, color: "FFFFFF"
   });
-  slide.addText(lesson.title || "Lesson", {
+  slide.addText(String(lesson.title || "Lesson"), {
     x: 0.7, y: 1.8, w: 6.1, h: 1.7,
     fontSize: 34, bold: true, color: "FFFFFF", margin: 0, fit: "shrink"
   });
-  slide.addText(lesson.gradeSubject || "", {
+  slide.addText(String(lesson.gradeSubject || ""), {
     x: 0.7, y: 3.7, w: 5.9, h: 0.45,
     fontSize: 20, color: "EDE9FE"
   });
-  slide.addText(lesson.curriculum || "", {
+  slide.addText(String(lesson.curriculum || ""), {
     x: 0.7, y: 4.25, w: 5.9, h: 0.4,
     fontSize: 15, color: "DDD6FE"
   });
@@ -162,7 +162,7 @@ async function createLessonPowerPoint(lesson) {
   slides.forEach((item, index) => {
     slide = pptx.addSlide();
 
-    slide.addText(item.title || `Lesson Slide ${index + 1}`, {
+    slide.addText(String(item.title || `Lesson Slide ${index + 1}`), {
       x: 0.7, y: 0.55, w: 11.7, h: 0.65,
       fontSize: 28, bold: true, color: "17181C", fit: "shrink"
     });
@@ -182,14 +182,14 @@ async function createLessonPowerPoint(lesson) {
         fill: { color: "F3F0FF" },
         line: { color: "D9CCFF", width: 1 }
       });
-      slide.addText(`Classroom prompt: ${item.interaction}`, {
+      slide.addText(`Classroom prompt: ${String(item.interaction)}`, {
         x: 0.95, y: 5.58, w: 11.1, h: 0.35,
         fontSize: 14, bold: true, color: "4B3A82", fit: "shrink"
       });
     }
 
     if (item.teacher_notes) {
-      slide.addNotes(item.teacher_notes);
+      slide.addNotes(String(item.teacher_notes));
     }
   });
 
