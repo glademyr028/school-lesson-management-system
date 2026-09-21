@@ -493,3 +493,56 @@ footer {
   display: block;
   margin-top: 6px;
 }
+
+
+/* ==========================================
+   Teacher Readability
+   ========================================== */
+
+.result-section[data-text-size="large"],
+.result-section[data-text-size="extra-large"] {
+  --result-body-size: 22px;
+  --result-title-size: 32px;
+  --result-prompt-size: 19px;
+}
+
+.result-section[data-text-size="extra-large"] {
+  --result-body-size: 26px;
+  --result-title-size: 36px;
+  --result-prompt-size: 22px;
+}
+
+.result-section .result-card > p,
+.result-section .result-card > ul,
+.result-section .result-card > ol,
+.result-section .lesson-phase,
+.result-section .lesson-phase li,
+.result-section .assessment-item,
+.result-section .slide-preview li,
+.result-section .slide-preview p {
+  font-size: var(--result-body-size, 18px);
+  line-height: 1.6;
+}
+
+.result-section .result-card > h3,
+.result-section .result-card > h4,
+.result-section .slide-preview h4 {
+  font-size: var(--result-title-size, 28px);
+}
+
+.result-section .lesson-header h2 {
+  font-size: var(--result-title-size, 32px);
+}
+
+.result-section .slide-preview .slide-number,
+.result-section .result-badge {
+  font-size: var(--result-prompt-size, 19px);
+}
+
+.result-section .slide-preview {
+  padding: 22px;
+}
+
+.result-section .field-hint {
+  font-size: max(14px, calc(var(--result-body-size, 18px) * 0.7));
+}
