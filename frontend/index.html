@@ -40,24 +40,76 @@
           </div>
         </div>
 
+        <div class="context-heading">Educational Context</div>
+
         <div class="form-grid">
           <div class="field">
-            <label for="curriculum">Country / curriculum</label>
-            <select id="curriculum">
-              <option value="Philippines · MATATAG">Philippines · MATATAG</option>
-              <option value="Philippines · K to 12">Philippines · K to 12</option>
+            <label for="country">Country</label>
+            <select id="country">
+              <option value="Philippines" selected>Philippines</option>
+              <option value="United States">United States</option>
+              <option value="Canada">Canada</option>
+              <option value="United Kingdom">United Kingdom</option>
+              <option value="Singapore">Singapore</option>
+              <option value="Australia">Australia</option>
+              <option value="Custom">Custom country</option>
             </select>
+            <input id="customCountry" class="custom-context-input hidden" type="text" placeholder="Enter country">
           </div>
 
           <div class="field">
-            <label for="gradeSubject">Grade &amp; subject</label>
-            <select id="gradeSubject">
-              <option value="Grade 5 · Science">Grade 5 · Science</option>
-              <option value="Grade 4 · Science">Grade 4 · Science</option>
-              <option value="Grade 6 · Science">Grade 6 · Science</option>
-              <option value="Grade 5 · Mathematics">Grade 5 · Mathematics</option>
-              <option value="Grade 5 · English">Grade 5 · English</option>
+            <label for="curriculum">Curriculum / educational framework</label>
+            <select id="curriculum">
+              <option value="MATATAG" selected>MATATAG</option>
+              <option value="K to 12">K to 12</option>
+              <option value="Custom">Custom framework</option>
             </select>
+            <input id="customCurriculum" class="custom-context-input hidden" type="text" placeholder="Enter curriculum or framework">
+          </div>
+
+          <div class="field">
+            <label for="gradeLevel">Grade level</label>
+            <select id="gradeLevel">
+              <option value="Grade 1">Grade 1</option>
+              <option value="Grade 2">Grade 2</option>
+              <option value="Grade 3">Grade 3</option>
+              <option value="Grade 4">Grade 4</option>
+              <option value="Grade 5" selected>Grade 5</option>
+              <option value="Grade 6">Grade 6</option>
+              <option value="Grade 7">Grade 7</option>
+              <option value="Grade 8">Grade 8</option>
+              <option value="Grade 9">Grade 9</option>
+              <option value="Grade 10">Grade 10</option>
+              <option value="Grade 11">Grade 11</option>
+              <option value="Grade 12">Grade 12</option>
+              <option value="Custom">Custom grade level</option>
+            </select>
+            <input id="customGradeLevel" class="custom-context-input hidden" type="text" placeholder="Enter grade level">
+          </div>
+
+          <div class="field">
+            <label for="subject">Subject</label>
+            <select id="subject">
+              <option value="Mathematics">Mathematics</option>
+              <option value="Science" selected>Science</option>
+              <option value="English">English</option>
+              <option value="Filipino">Filipino</option>
+              <option value="Araling Panlipunan">Araling Panlipunan</option>
+              <option value="MAPEH">MAPEH</option>
+              <option value="TLE">TLE</option>
+              <option value="ICT">ICT</option>
+              <option value="Custom">Custom subject</option>
+            </select>
+            <input id="customSubject" class="custom-context-input hidden" type="text" placeholder="Enter subject">
+          </div>
+
+          <div class="field">
+            <label for="duration">Lesson duration</label>
+            <div class="duration-input">
+              <input id="duration" type="number" min="5" max="480" step="5" value="40" placeholder="40">
+              <span>minutes</span>
+            </div>
+            <small class="field-hint">Set the total time available for this lesson.</small>
           </div>
         </div>
 
