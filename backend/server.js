@@ -62,7 +62,11 @@ app.use(
 function validateLessonRequest(req) {
 
   const {
+    country,
     curriculum,
+    gradeLevel,
+    subject,
+    durationMinutes,
     gradeSubject,
     topic,
     outputs
@@ -86,13 +90,19 @@ function validateLessonRequest(req) {
     valid: true,
 
     data: {
-      curriculum:
-        curriculum ||
-        "Philippines · MATATAG",
+      country: country || "Philippines",
+
+      curriculum: curriculum || "MATATAG",
+
+      gradeLevel: gradeLevel || "Grade 5",
+
+      subject: subject || "Science",
+
+      durationMinutes: Number(durationMinutes) || 40,
 
       gradeSubject:
         gradeSubject ||
-        "Grade 5 · Science",
+        ((gradeLevel || "Grade 5") + " · " + (subject || "Science")),
 
       topic:
         topic.trim(),
@@ -201,8 +211,29 @@ app.post(
 
 
       console.log(
+        "Country:",
+        country
+      );
+
+      console.log(
         "Curriculum:",
         curriculum
+      );
+
+      console.log(
+        "Grade Level:",
+        gradeLevel
+      );
+
+      console.log(
+        "Subject:",
+        subject
+      );
+
+      console.log(
+        "Duration:",
+        durationMinutes,
+        "minutes"
       );
 
       console.log(
@@ -228,10 +259,12 @@ app.post(
       const result =
         await generateLesson({
 
+          country,
           curriculum,
-
+          gradeLevel,
+          subject,
+          durationMinutes,
           gradeSubject,
-
           topic,
 
           outputs
@@ -247,9 +280,20 @@ app.post(
 
         success: true,
 
+        country:
+          result.country || country,
+
         curriculum:
-          result.curriculum ||
-          curriculum,
+          result.curriculum || curriculum,
+
+        gradeLevel:
+          result.gradeLevel || gradeLevel,
+
+        subject:
+          result.subject || subject,
+
+        durationMinutes:
+          result.durationMinutes || durationMinutes,
 
         gradeSubject:
           result.gradeSubject ||
