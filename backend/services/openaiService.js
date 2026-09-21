@@ -58,8 +58,20 @@ The final Gemini output must be:
 - assessment-aware
 - suitable for generating lesson plans, learning modules,
   and presentation slides
+- context-aware for the selected country and curriculum
+- practical for the teacher's actual classroom setting
+- internally consistent across every generated resource
 
 Do not invent curriculum standards that were not provided.
+
+Treat the selected country/curriculum as an important educational context.
+Use terminology, examples, activities, and expectations appropriate to
+that context. Do not claim official standards or curriculum codes unless
+they are supplied by the teacher or otherwise explicitly available.
+
+The purpose of the system is to reduce teacher preparation time.
+Generate resources that are as classroom-ready as reasonably possible,
+while keeping the teacher as the final reviewer before teaching.
 
 Respect the teacher's exact request.
 
@@ -232,12 +244,23 @@ Every slide should contain:
 - concise slide content
 - teacher notes
 - visual suggestion
+- image search terms that can guide the PowerPoint renderer toward
+  relevant educational clipart, illustrations, diagrams, icons, maps,
+  charts, or age-appropriate images
 - student interaction when appropriate
 
 Slides should NOT contain excessive text.
 
-The presentation should support the lesson rather than
-simply copy the lesson plan.
+Every slide should use a relevant visual concept whenever it supports
+understanding. Prefer educational visuals over decoration. Visuals may
+include simple diagrams, labeled processes, illustrations, icons, maps,
+charts, or age-appropriate imagery.
+
+The presentation should support the lesson rather than simply copy
+the lesson plan.
+
+The lesson, learning module, assessment, and presentation must describe
+the same concepts, terminology, and learning sequence.
 
 QUALITY REQUIREMENTS
 ====================
