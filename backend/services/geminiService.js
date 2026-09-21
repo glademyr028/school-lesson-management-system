@@ -175,6 +175,13 @@ const lessonSchema = {
                 type: "string"
               },
 
+              image_search_terms: {
+                type: "array",
+                items: {
+                  type: "string"
+                }
+              },
+
               interaction: {
                 type: "string"
               }
@@ -186,6 +193,7 @@ const lessonSchema = {
               "content",
               "teacher_notes",
               "visual_suggestion",
+              "image_search_terms",
               "interaction"
             ]
           }
