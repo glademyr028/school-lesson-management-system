@@ -69,7 +69,8 @@ function validateLessonRequest(req) {
     durationMinutes,
     gradeSubject,
     topic,
-    outputs
+    outputs,
+    textSize
   } = req.body || {};
 
   if (
@@ -117,9 +118,25 @@ function validateLessonRequest(req) {
               "Lesson Plan",
               "Learning Module",
               "Slide Deck"
-            ]
+            ],
+
+      textSize: normalizeTextSize(textSize)
     }
   };
+}
+
+function normalizeTextSize(value) {
+  const presets = {
+    standard: { preset: "standard", body: 18, title: 28, prompt: 16, meta: 15 },
+    large: { preset: "large", body: 22, title: 32, prompt: 19, meta: 17 },
+    "extra-large": { preset: "extra-large", body: 26, title: 36, prompt: 22, meta: 19 }
+  };
+  if (!value || typeof value !== "object") return presets.large;
+  if (value.preset === "custom") {
+    const body = Math.min(40, Math.max(12, Number(value.body) || 22));
+    return { preset: "custom", body, title: Math.max(32, body + 10), prompt: Math.max(19, body - 3), meta: Math.max(15, body - 5) };
+  }
+  return presets[value.preset] || presets.large;
 }
 
 // ==========================================
@@ -203,7 +220,12 @@ app.post(
 
 
       const {
+        country,
         curriculum,
+        gradeLevel,
+        subject,
+        durationMinutes,
+        textSize,
         gradeSubject,
         topic,
         outputs
@@ -266,6 +288,7 @@ app.post(
           durationMinutes,
           gradeSubject,
           topic,
+          textSize,
 
           outputs
 
@@ -306,6 +329,10 @@ app.post(
         outputs:
           result.outputs ||
           outputs,
+
+        textSize:
+          result.textSize ||
+          textSize,
 
         lesson:
           result.lesson,
@@ -435,12 +462,14 @@ app.post(
       const result =
         await generateLesson({
 
+          country,
           curriculum,
-
+          gradeLevel,
+          subject,
+          durationMinutes,
+          textSize,
           gradeSubject,
-
           topic,
-
           outputs
 
         });
