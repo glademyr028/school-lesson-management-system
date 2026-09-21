@@ -48,6 +48,7 @@ async function generateLesson({
   gradeLevel = "Grade 5",
   subject = "Science",
   durationMinutes = 40,
+  textSize = { preset: "large", body: 22, title: 32, prompt: 19, meta: 17 },
   gradeSubject,
   topic,
   outputs = [
@@ -84,6 +85,7 @@ async function generateLesson({
       gradeLevel,
       subject,
       durationMinutes,
+      textSize,
       gradeSubject: gradeSubject || (gradeLevel + " · " + subject),
       topic,
       outputs
@@ -157,6 +159,7 @@ async function generateLesson({
     gradeLevel,
     subject,
     durationMinutes,
+    textSize,
     gradeSubject: gradeSubject || (gradeLevel + " · " + subject),
     topic,
     outputs,
