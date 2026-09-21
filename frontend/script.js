@@ -1,6 +1,6 @@
 // ==========================================
 // School Management System
-// Frontend AI Integration
+// Frontend Lesson Generator
 // ==========================================
 
 // ==========================================
@@ -249,7 +249,7 @@ function setGenerateButtonLoading(
 }
 
 // ==========================================
-// Display AI Result
+// Display Lesson Result
 // ==========================================
 
 function displayLessonResult(
@@ -279,7 +279,7 @@ function displayLessonResult(
         <h4>Generation completed</h4>
 
         <p>
-          The AI returned a response, but no lesson content was found.
+          The system returned a response, but no lesson content was found.
         </p>
       </article>
     `;
@@ -300,7 +300,7 @@ function displayLessonResult(
     <article class="result-card lesson-header">
 
       <div class="result-badge">
-        AI GENERATED LESSON
+        GENERATED LESSON
       </div>
 
       <h2>
@@ -688,7 +688,7 @@ function displayLessonResult(
           <div>
 
             <div class="result-badge">
-              AI PRESENTATION
+              PRESENTATION
             </div>
 
             <h3>
