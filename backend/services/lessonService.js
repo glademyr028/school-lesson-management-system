@@ -15,7 +15,11 @@ const {
 // ==========================================
 
 async function generateLesson({
-  curriculum,
+  country = "Philippines",
+  curriculum = "MATATAG",
+  gradeLevel = "Grade 5",
+  subject = "Science",
+  durationMinutes = 40,
   gradeSubject,
   topic,
   outputs = [
@@ -47,8 +51,12 @@ async function generateLesson({
 
   const geminiPrompt =
     await createGeminiPrompt({
+      country,
       curriculum,
-      gradeSubject,
+      gradeLevel,
+      subject,
+      durationMinutes,
+      gradeSubject: gradeSubject || (gradeLevel + " · " + subject),
       topic,
       outputs
     });
@@ -113,8 +121,12 @@ async function generateLesson({
   );
 
   return {
+    country,
     curriculum,
-    gradeSubject,
+    gradeLevel,
+    subject,
+    durationMinutes,
+    gradeSubject: gradeSubject || (gradeLevel + " · " + subject),
     topic,
     outputs,
 
