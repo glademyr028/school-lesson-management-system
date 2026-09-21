@@ -104,7 +104,7 @@ function addVisual(slide, suggestion, title) {
   });
 }
 
-function addBullets(slide, content) {
+function addBullets(slide, content, fontSize = 19) {
   const items = Array.isArray(content) ? content.filter(item => item !== null && item !== undefined && String(item).trim() !== "") : [];
   if (!items.length) return;
 
@@ -115,7 +115,7 @@ function addBullets(slide, content) {
       y: 1.45,
       w: 5.95,
       h: 4.55,
-      fontSize: 19,
+      fontSize,
       color: "33343A",
       breakLine: false,
       margin: 0.05,
@@ -127,6 +127,12 @@ function addBullets(slide, content) {
 
 async function createLessonPowerPoint(lesson) {
   const pptx = new pptxgen();
+
+  const readability = lesson.textSize || { preset: "large", body: 22, title: 32, prompt: 19, meta: 17 };
+  const bodyFontSize = Number(readability.body) || 22;
+  const titleFontSize = Number(readability.title) || 32;
+  const promptFontSize = Number(readability.prompt) || 19;
+  const metaFontSize = Number(readability.meta) || 17;
 
   pptx.layout = "LAYOUT_WIDE";
   pptx.author = "School Management System";
@@ -142,19 +148,19 @@ async function createLessonPowerPoint(lesson) {
   slide.background = { color: "5B35D5" };
   slide.addText("School Management System", {
     x: 0.7, y: 0.7, w: 11, h: 0.5,
-    fontSize: 20, bold: true, color: "FFFFFF"
+    fontSize: metaFontSize, bold: true, color: "FFFFFF"
   });
   slide.addText(String(lesson.title || "Lesson"), {
     x: 0.7, y: 1.8, w: 6.1, h: 1.7,
-    fontSize: 34, bold: true, color: "FFFFFF", margin: 0, fit: "shrink"
+    fontSize: titleFontSize, bold: true, color: "FFFFFF", margin: 0, fit: "shrink"
   });
   slide.addText(String(lesson.gradeSubject || ""), {
     x: 0.7, y: 3.7, w: 5.9, h: 0.45,
-    fontSize: 20, color: "EDE9FE"
+    fontSize: metaFontSize, color: "EDE9FE"
   });
   slide.addText(String(lesson.curriculum || ""), {
     x: 0.7, y: 4.25, w: 5.9, h: 0.4,
-    fontSize: 15, color: "DDD6FE"
+    fontSize: Math.max(14, metaFontSize - 2), color: "DDD6FE"
   });
   addVisual(slide, slides[0]?.visual_suggestion || lesson.title, lesson.title);
 
@@ -164,10 +170,10 @@ async function createLessonPowerPoint(lesson) {
 
     slide.addText(String(item.title || `Lesson Slide ${index + 1}`), {
       x: 0.7, y: 0.55, w: 11.7, h: 0.65,
-      fontSize: 28, bold: true, color: "17181C", fit: "shrink"
+      fontSize: titleFontSize, bold: true, color: "17181C", fit: "shrink"
     });
 
-    addBullets(slide, item.content);
+    addBullets(slide, item.content, bodyFontSize);
 
     addVisual(
       slide,
@@ -184,7 +190,7 @@ async function createLessonPowerPoint(lesson) {
       });
       slide.addText(`Classroom prompt: ${String(item.interaction)}`, {
         x: 0.95, y: 5.58, w: 11.1, h: 0.35,
-        fontSize: 14, bold: true, color: "4B3A82", fit: "shrink"
+        fontSize: promptFontSize, bold: true, color: "4B3A82", fit: "shrink"
       });
     }
 
@@ -198,9 +204,9 @@ async function createLessonPowerPoint(lesson) {
     slide = pptx.addSlide();
     slide.addText("Learning Objectives", {
       x: 0.7, y: 0.6, w: 11, h: 0.6,
-      fontSize: 28, bold: true, color: "17181C"
+      fontSize: titleFontSize, bold: true, color: "17181C"
     });
-    addBullets(slide, lesson.learning_objectives || []);
+    addBullets(slide, lesson.learning_objectives || [], bodyFontSize);
     addVisual(slide, lesson.title, "Learning Objectives");
   }
 
