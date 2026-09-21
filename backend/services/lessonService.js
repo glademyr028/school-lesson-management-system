@@ -76,6 +76,34 @@ async function generateLesson({
   );
 
   // ========================================
+  // Validate AI response
+  // ========================================
+
+  if (!result || typeof result !== "object") {
+    throw new Error(
+      "Gemini returned an invalid lesson response."
+    );
+  }
+
+  if (!result.lesson || typeof result.lesson !== "object") {
+    throw new Error(
+      "Gemini response is missing the lesson content."
+    );
+  }
+
+  if (!result.presentation || typeof result.presentation !== "object") {
+    throw new Error(
+      "Gemini response is missing the presentation content."
+    );
+  }
+
+  if (!Array.isArray(result.presentation.slides)) {
+    throw new Error(
+      "Gemini response contains an invalid presentation structure."
+    );
+  }
+
+  // ========================================
   // STEP 3
   // ========================================
 
