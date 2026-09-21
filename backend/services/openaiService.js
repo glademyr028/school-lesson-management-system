@@ -202,34 +202,47 @@ ${outputs.join(", ")}
 IMPORTANT INSTRUCTIONS
 ======================
 
-1. Follow the specified curriculum and grade level.
+1. Follow the specified country, curriculum, grade level, and subject context.
 
 2. Keep all explanations appropriate for the students'
    developmental level.
 
-3. Respect the requested lesson duration.
+3. Use examples, terminology, classroom activities, and assessment
+   approaches that fit the selected educational context.
 
-4. Create measurable learning objectives.
+4. Do not invent official curriculum standards, codes, policies,
+   or references that were not provided.
 
-5. Organize the lesson logically from introduction
+5. Treat the teacher as the final reviewer: produce classroom-ready
+   materials that can be checked, customized if needed, and taught
+   with minimal preparation time.
+
+6. Respect the requested lesson duration.
+
+7. Create measurable learning objectives.
+
+8. Organize the lesson logically from introduction
    through assessment and closure.
 
-6. Include important concepts students need to understand.
+9. Include important concepts students need to understand.
 
-7. Include appropriate materials/resources.
+10. Include appropriate materials/resources.
 
-8. Identify prerequisite knowledge when relevant.
+11. Identify prerequisite knowledge when relevant.
 
-9. Identify common misconceptions when relevant.
+12. Identify common misconceptions when relevant.
 
-10. Include teacher actions and student actions.
+13. Include teacher actions and student actions.
 
-11. Include assessment questions with correct answers.
+14. Include assessment questions with correct answers.
 
-12. Include a concise homework or follow-up activity
+15. Include a concise homework or follow-up activity
     when appropriate.
 
-13. Create a clear lesson summary.
+16. Create a clear lesson summary.
+
+17. Keep the lesson plan, learning module, assessment, and presentation
+    consistent with one another.
 
 PRESENTATION REQUIREMENTS
 =========================
