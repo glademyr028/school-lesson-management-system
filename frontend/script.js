@@ -10,6 +10,14 @@
 const topicInput =
   document.getElementById("topic");
 
+const contextFields = {
+  country: document.getElementById("country"),
+  curriculum: document.getElementById("curriculum"),
+  gradeLevel: document.getElementById("gradeLevel"),
+  subject: document.getElementById("subject"),
+  duration: document.getElementById("duration")
+};
+
 const charCount =
   document.getElementById("charCount");
 
@@ -70,19 +78,12 @@ if (generateBtn) {
 
 async function generateLesson() {
 
-  const curriculumElement =
-    document.getElementById("curriculum");
-
-  const gradeSubjectElement =
-    document.getElementById("gradeSubject");
-
-  const curriculum =
-    curriculumElement?.value ||
-    "Philippines · MATATAG";
-
-  const gradeSubject =
-    gradeSubjectElement?.value ||
-    "Grade 5 · Science";
+  const country = getContextValue("country", "Philippines");
+  const curriculum = getContextValue("curriculum", "MATATAG");
+  const gradeLevel = getContextValue("gradeLevel", "Grade 5");
+  const subject = getContextValue("subject", "Science");
+  const durationMinutes = Number(contextFields.duration?.value || 40);
+  const gradeSubject = gradeLevel + " · " + subject;
 
   const topic =
     topicInput?.value.trim() || "";
@@ -98,6 +99,12 @@ async function generateLesson() {
   // ========================================
   // Validation
   // ========================================
+
+  if (!durationMinutes || durationMinutes < 5) {
+    alert("Please enter a lesson duration of at least 5 minutes.");
+    contextFields.duration?.focus();
+    return;
+  }
 
   if (!topic) {
 
@@ -126,7 +133,11 @@ async function generateLesson() {
   // ========================================
 
   currentRequest = {
+    country,
     curriculum,
+    gradeLevel,
+    subject,
+    durationMinutes,
     gradeSubject,
     topic,
     outputs: selectedOutputs
@@ -156,11 +167,13 @@ async function generateLesson() {
           },
 
           body: JSON.stringify({
+            country,
             curriculum,
-            gradeSubject,
+            gradeLevel,
+            subject,
+            durationMinutes,
             topic,
-            outputs:
-              selectedOutputs
+            outputs: selectedOutputs
           })
         }
       );
@@ -1057,3 +1070,29 @@ function escapeHtml(value) {
       "&#039;"
     );
 }
+
+// ==========================================
+// Custom Educational Context Fields
+// ==========================================
+
+function getContextValue(selectId, fallback) {
+  const select = document.getElementById(selectId);
+  if (!select) return fallback;
+  if (select.value !== "Custom") return select.value || fallback;
+  const custom = document.getElementById("custom" + selectId.charAt(0).toUpperCase() + selectId.slice(1));
+  return custom?.value.trim() || fallback;
+}
+
+function setupCustomContextField(selectId) {
+  const select = document.getElementById(selectId);
+  const custom = document.getElementById("custom" + selectId.charAt(0).toUpperCase() + selectId.slice(1));
+  if (!select || !custom) return;
+  const update = () => {
+    custom.classList.toggle("hidden", select.value !== "Custom");
+    custom.required = select.value === "Custom";
+  };
+  select.addEventListener("change", update);
+  update();
+}
+
+["country", "curriculum", "gradeLevel", "subject"].forEach(setupCustomContextField);
