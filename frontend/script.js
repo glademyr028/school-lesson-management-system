@@ -496,7 +496,7 @@ function displayLessonResult(
     html += `
       <article class="result-card">
 
-        <h3>📝 Lesson Flow</h3>
+        <h3>📝 Lesson Flow</h3>\n        <p class="field-hint">Total planned time: <strong>${escapeHtml(data.durationMinutes || lesson.duration_minutes || "N/A")} minutes</strong></p>
 
         <div class="lesson-flow">
     `;
