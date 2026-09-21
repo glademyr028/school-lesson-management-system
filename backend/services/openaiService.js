@@ -27,6 +27,7 @@ async function createGeminiPrompt({
   gradeLevel,
   subject,
   durationMinutes,
+  textSize,
   gradeSubject,
   topic,
   outputs
@@ -109,6 +110,8 @@ ${outputs.join(", ")}
 
 Create the optimized master production prompt
 that will be sent to Gemini.
+
+Teacher readability is an explicit presentation constraint. The selected text size should be reflected in slide density: larger text means fewer, shorter bullets and less dense content.
 `;
 
       const response = await client.responses.create({
@@ -149,7 +152,12 @@ that will be sent to Gemini.
       );
 
       return buildMasterPrompt({
+        country,
         curriculum,
+        gradeLevel,
+        subject,
+        durationMinutes,
+        textSize,
         gradeSubject,
         topic,
         outputs
@@ -170,7 +178,12 @@ that will be sent to Gemini.
   );
 
   return buildMasterPrompt({
+    country,
     curriculum,
+    gradeLevel,
+    subject,
+    durationMinutes,
+    textSize,
     gradeSubject,
     topic,
     outputs
@@ -190,6 +203,7 @@ function buildMasterPrompt({
   gradeLevel,
   subject,
   durationMinutes,
+  textSize,
   gradeSubject,
   topic,
   outputs
@@ -293,6 +307,7 @@ Every slide should contain:
 - student interaction when appropriate
 
 Slides should NOT contain excessive text.
+For Large or Extra Large readability, keep slide content especially concise: prefer 3–4 short bullets for Large and 2–3 short bullets for Extra Large. Avoid dense paragraphs so the selected text size remains readable.
 
 Every slide should use a relevant visual concept whenever it supports
 understanding. Prefer educational visuals over decoration. Visuals may
